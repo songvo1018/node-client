@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-
 import axios from 'axios'
 
-import OrderList from './OrderList/index'
+import OrderList from './OrderList/OrderList'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,7 @@ const Orders = () => {
 
   React.useEffect(() =>{
     axios.get('http://194.67.93.144:5000/orders/')
+    // axios.get('http://localhost:5000/orders/')
     .then((response) => {
       setOrdersData(response.data)
     })
@@ -34,9 +36,12 @@ const Orders = () => {
     <Paper>
       <div>Orders</div>
       <div>
+        <Link to="/newOrder">new order</Link>
+      </div>
+      <div>
         {
           !ordersData.count 
-            ? 'loading' 
+            ? 'loading...' 
             : <OrderList ordersData={ordersData} />
           
         }

@@ -3,35 +3,29 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
-
+import OrderCard from '../OrderCard/OrderCard'
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 const OrderList = ({ordersData}) => {
-  const classes = useStyles();
   const orders = ordersData.orders;
 
   return (
     <List component="nav">
+      <div>Total: {ordersData.count} </div>
       {
         orders.map((order) => {
           return (
-            <ListItem key={order._id}>
+            <OrderCard order={order}>
+              <ListItem key={order._id}>
               <ListItemLink href="#simple-list">
-                <ListItemText>{order.product.name}</ListItemText>
-                <ListItemText>{order._id.slice(6,11)}</ListItemText>
+                <ListItemText>Order ID:{order._id.slice(6,11)}</ListItemText>
+                <ListItemText>Quantity: {order.quantity}</ListItemText>
               </ListItemLink>
             </ListItem>
+            </OrderCard>
           )
         })
       }

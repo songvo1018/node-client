@@ -6,9 +6,12 @@ import {
   Link
 } from "react-router-dom";
 
-import Home from './components/Home/index'
-import NewOrder from './components/NewOrder/index'
+import Home from './components/Home/Home'
 import Orders from './components/Orders/index'
+import Products from './components/Products/index'
+
+import NewProduct from './components/NewProduct/NewProduct'
+import NewOrder from './components/NewOrder/NewOrder'
 
 const App = () => {
 
@@ -26,7 +29,7 @@ const App = () => {
               <Link to="/orders">orders</Link>
             </li>
             <li>
-              <Link to="/newOrder">new order</Link>
+              <Link to="/products">products</Link>
             </li>
           </ul>
         </nav>
@@ -34,6 +37,12 @@ const App = () => {
         <Switch>
           <Route path="/orders">
             <Orders />
+          </Route>
+          <Route path="/products">
+            <Products />
+          </Route>
+          <Route path="/newProduct">
+            <NewProduct />
           </Route>
           <Route path="/newOrder">
             <NewOrder />
