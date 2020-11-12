@@ -2,6 +2,10 @@ import React from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
+import {Link} from 'react-router-dom'
+import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 function getModalStyle() {
   return {
     top: `50%`,
@@ -13,18 +17,22 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
       position: 'absolute',
-      width: 400,
+      maxWidth: 600,
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
-    img: {
-      maxWidth: 200,
-    },
     item: {
-      minWidth: 550,
-    }
+      minWidth: 260,
+      minHeight: 40,
+      backgroundColor: '#ffffff',
+      display: 'flex'
+    },
+    link: {
+      color: '#000',
+      textDecoration: 'none',
+    },
   }),
 );
 
@@ -42,20 +50,17 @@ const OrderCard = (data) => {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <div>Order ID: {data.order._id.slice(6,11)}</div>
-      <div>{data.order.product.name}</div>
-      <div>{data.order.product.price}</div>
-      <div>
-        {
-          data.order.product.productImage 
-            // ? <img className={classes.img} src={`http://localhost:5000/${data.product.productImage}`} /> 
-            ? <img className={classes.img} src={`http://194.67.93.144/${data.product.productImage}`} /> 
-            : 'Here will be image...sorry'
-        }
-    </div>
+    <Box  style={modalStyle} className={classes.paper}>
+      <Typography>Order ID: {data.order._id.slice(6,11)}</Typography>
+      {data.order.product
+      ? <Box>
+          <Typography>{data.order.product.name}</Typography>
+          <Typography>{data.order.product.price}</Typography>
+          <Button variant='outlined'><Link className={classes.link} to="/products">products</Link></Button>
+        </Box>
+      : 'Sorry, no product found for this order.'}
 
-    </div>
+    </Box>
   );
 
   return (

@@ -1,9 +1,7 @@
 import React from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button'
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import axios from 'axios'
 
 function getModalStyle() {
   return {
@@ -16,7 +14,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
       position: 'absolute',
-      width: 300,
+      width: 400,
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
@@ -26,11 +24,8 @@ const useStyles = makeStyles((theme) =>
       maxWidth: 200,
     },
     item: {
-      minWidth: 260,
+      minWidth: 60,
       minHeight: 40,
-      backgroundColor: '#ffffff',
-      display: 'flex'
-      
     }
   }),
 );
@@ -47,24 +42,43 @@ const ProductCard = (data) => {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  const Id = data.product._id;
+  const sendRequest = () => {
+    const config = {
+      method: 'delete',
+      url: `http://194.67.93.144:5000/products/${Id}`, 
+      headers: {}
+    }
+    axios(config)
+    // axios.delete(`http://localhost:5000/products/${productId}`, [, headers] )
+    .then((response) => {
+      if (response.status == 200) {
+        handleClose();
+        data.setUpdate(true)
+      }
+    })
+  }
 
   const body = (
-    <Box style={modalStyle} className={classes.paper}>
-      <Typography>Name: {data.product.name}</Typography>
-      <Typography>Price: ${data.product.price}</Typography>
-      <Typography>{data.product.productImage 
-      ? <img className={classes.img} src={`http://194.67.93.144:5000/${data.product.productImage}`} /> 
-        // ? <img className={classes.img} src={`http://localhost:5000/${data.product.productImage}`} /> 
-      : 'Here will be image...sorry'
-    }</Typography>
-
-    </Box>
+    <div style={modalStyle} className={classes.paper}>
+      <h3>Delete</h3>
+      <div>
+        <div>
+          {data.children}
+        </div>
+        <div>
+          <button onClick={sendRequest} >YES</button>
+          <button onClick={handleClose} >NO</button>
+        </div>
+      </div>
+    </div>
   );
 
   return (
     <div >
       <button className={classes.item} onClick={handleOpen}>
-        {data.children}
+        Del
       </button>
       <Modal
         open={open}
